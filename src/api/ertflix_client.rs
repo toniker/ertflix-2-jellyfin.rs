@@ -1,38 +1,60 @@
 use crate::models::ertflix;
 use reqwest::{Client, RequestBuilder};
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize};
+use std::fmt;
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ApiResponse {
-    section_contents: Vec<SectionContents>,
+    pub section_contents: Vec<SectionContents>,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct SectionContents {
-    toplist_codename: Option<String>,
-    section_id: i32,
-    tiles_ids: Option<Vec<Tile>>,
+    pub toplist_codename: Option<String>,
+    pub section_id: i32,
+    pub tiles_ids: Option<Vec<Tile>>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Tile {
-    origin_entity_id: i32,
-    codename: String,
-    id: String,
-}
-
-#[derive(Debug)]
-pub struct ErtflixResponse {
-    shows: Vec<ertflix::TVShow>,
-    movies: Vec<ertflix::Movie>,
+    pub origin_entity_id: i32,
+    pub codename: String,
+    pub id: String,
 }
 
 pub struct ErtflixClient {
     client: Client,
     base_url: String,
+}
+
+#[derive(Debug)]
+pub enum Error {
+    RequestError(reqwest::Error),
+    ParseError(serde_json::Error),
+    CustomError(String),
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Error::RequestError(e) => write!(f, "Request error: {}", e),
+            Error::ParseError(e) => write!(f, "Parse error: {}", e),
+            Error::CustomError(s) => write!(f, "Custom error: {}", s),
+        }
+    }
+}
+
+impl std::error::Error for Error {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match *self {
+            Error::RequestError(ref e) => Some(e),
+            Error::ParseError(ref e) => Some(e),
+            Error::CustomError(_) => None,
+        }
+    }
 }
 
 impl ErtflixClient {
@@ -43,16 +65,15 @@ impl ErtflixClient {
         }
     }
 
-    pub async fn get_collections(&self) -> Result<ErtflixResponse, Box<dyn std::error::Error>> {
-        let url = "https://api.app.ertflix.gr/v1/InsysGoPage/GetPageContent?platformCodename=www&pageCodename=mainpage&limit=5&page=1&$headers=%7B%22X-Api-Date-Format%22:%22iso%22,%22X-Api-Camel-Case%22:true%7D";
+    pub async fn get_collections<CollectionCategory>(
+        &self,
+        filtering_strategy: fn(SectionContents) -> CollectionCategory,
+    ) -> Result<Vec<CollectionCategory>, Box<dyn std::error::Error>> {
+        let url = "https://api.app.ertflix.gr/v1/InsysGoPage/GetPageContent?platformCodename=www&pageCodename=mainpage&limit=100&page=1&$headers=%7B%22X-Api-Date-Format%22:%22iso%22,%22X-Api-Camel-Case%22:true%7D";
 
-        let response = self.client.get(url)
-        .with_ertflix_headers()
-        .send()
-        .await;
+        let response = self.client.get(url).with_ertflix_headers().send().await;
 
         let response_str = response?.text().await?;
-        println!("Raw Response: {}", response_str.clone()); // Log the raw response
 
         // Deserialize into the new top-level struct
         let top_level_response: ApiResponse = match serde_json::from_str(&response_str) {
@@ -65,14 +86,17 @@ impl ErtflixClient {
 
         // Now you can access the content
         let api_response_content: Vec<SectionContents> = top_level_response
-        .section_contents
-        .into_iter()
-        .filter(|s| s.toplist_codename.is_some())
-        .collect();
+            .section_contents
+            .into_iter()
+            .filter(|s| s.toplist_codename.is_some())
+            .collect();
 
-        println!("API Response Content: {:?}", api_response_content); // Log the parsed response
+        let collections: Vec<CollectionCategory> = api_response_content
+            .into_iter()
+            .map(filtering_strategy)
+            .collect();
 
-        unimplemented!();
+        Ok(collections)
     }
 }
 

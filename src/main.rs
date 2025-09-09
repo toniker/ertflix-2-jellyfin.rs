@@ -5,6 +5,8 @@ mod api;
 mod models;
 mod routes;
 mod services;
+mod config;
+mod error;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -17,7 +19,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(media_service.clone())
             .configure(routes::init_routes)
     })
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:25860")?
     .run()
     .await
 }

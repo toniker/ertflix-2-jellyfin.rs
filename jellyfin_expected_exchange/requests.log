@@ -1,0 +1,328 @@
+GET /System/Info/Public HTTP/1.1
+Host: jellyfin.keremidis.eu
+X-Emby-Authorization: MediaBrowser Device="Mac", DeviceId="D43FE36D-ACCB-5AC2-AE4B-C41D008AE6BD", Client="Infuse-Direct", Version="8.2.2"
+Accept: application/json
+User-Agent: Infuse-Direct/8.2.2
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+
+{
+  "LocalAddress": "https://jellyfin.keremidis.eu",
+  "ServerName": "optiplex",
+  "Version": "10.10.7",
+  "ProductName": "Jellyfin Server",
+  "OperatingSystem": "",
+  "Id": "6d6faaf682e64130a41fb2ad2b41a3b4",
+  "StartupWizardCompleted": true
+}
+
+===
+POST /Users/AuthenticateByName HTTP/1.1
+Host: jellyfin.keremidis.eu
+Content-Type: application/json
+X-Emby-Authorization: MediaBrowser DeviceId="D43FE36D-ACCB-5AC2-AE4B-C41D008AE6BD", Client="Infuse-Direct", Device="Mac", Version="8.2.2"
+Connection: keep-alive
+Accept: application/json
+User-Agent: Infuse-Direct/8.2.2
+Content-Length: 116
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br
+{"Pw":"#<USER_PASSWORD>","Username":"antonis","Password":"2fcb219861ae8f297b1de0cbe057004e3ea4ae52"}
+
+{
+  "User": {
+    "Name": "antonis",
+    "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4",
+    "Id": "86dd2eefc2e944c5b58c72da09c48ebb",
+    "HasPassword": true,
+    "HasConfiguredPassword": true,
+    "HasConfiguredEasyPassword": false,
+    "EnableAutoLogin": false,
+    "LastLoginDate": "2025-09-09T15:49:16.9678693Z",
+    "LastActivityDate": "2025-09-09T15:49:16.9678693Z",
+    "Configuration": {
+      "AudioLanguagePreference": "eng",
+      "PlayDefaultAudioTrack": true,
+      "SubtitleLanguagePreference": "eng",
+      "DisplayMissingEpisodes": false,
+      "GroupedFolders": [],
+      "SubtitleMode": "Always",
+      "DisplayCollectionsView": false,
+      "EnableLocalPassword": false,
+      "OrderedViews": [
+        "f137a2dd21bbc1b99aa5c0f6bf02a805",
+        "4514ec850e5ad0c47b58444e17b6346c",
+        "7e64e319657a9516ec78490da03edccb"
+      ],
+      "LatestItemsExcludes": [
+        "7e64e319657a9516ec78490da03edccb"
+      ],
+      "MyMediaExcludes": [],
+      "HidePlayedInLatest": true,
+      "RememberAudioSelections": true,
+      "RememberSubtitleSelections": true,
+      "EnableNextEpisodeAutoPlay": true,
+      "CastReceiverId": "F007D354"
+    },
+    "Policy": {
+      "IsAdministrator": true,
+      "IsHidden": true,
+      "EnableCollectionManagement": false,
+      "EnableSubtitleManagement": false,
+      "EnableLyricManagement": false,
+      "IsDisabled": false,
+      "BlockedTags": [],
+      "AllowedTags": [],
+      "EnableUserPreferenceAccess": true,
+      "AccessSchedules": [],
+      "BlockUnratedItems": [],
+      "EnableRemoteControlOfOtherUsers": true,
+      "EnableSharedDeviceControl": true,
+      "EnableRemoteAccess": true,
+      "EnableLiveTvManagement": true,
+      "EnableLiveTvAccess": true,
+      "EnableMediaPlayback": true,
+      "EnableAudioPlaybackTranscoding": true,
+      "EnableVideoPlaybackTranscoding": true,
+      "EnablePlaybackRemuxing": true,
+      "ForceRemoteSourceTranscoding": false,
+      "EnableContentDeletion": true,
+      "EnableContentDeletionFromFolders": [],
+      "EnableContentDownloading": true,
+      "EnableSyncTranscoding": true,
+      "EnableMediaConversion": true,
+      "EnabledDevices": [],
+      "EnableAllDevices": true,
+      "EnabledChannels": [],
+      "EnableAllChannels": true,
+      "EnabledFolders": [],
+      "EnableAllFolders": true,
+      "InvalidLoginAttemptCount": 0,
+      "LoginAttemptsBeforeLockout": -1,
+      "MaxActiveSessions": 0,
+      "EnablePublicSharing": true,
+      "BlockedMediaFolders": [],
+      "BlockedChannels": [],
+      "RemoteClientBitrateLimit": 0,
+      "AuthenticationProviderId": "Jellyfin.Server.Implementations.Users.DefaultAuthenticationProvider",
+      "PasswordResetProviderId": "Jellyfin.Server.Implementations.Users.DefaultPasswordResetProvider",
+      "SyncPlayAccess": "CreateAndJoinGroups"
+    }
+  },
+  "SessionInfo": {
+    "PlayState": {
+      "CanSeek": false,
+      "IsPaused": false,
+      "IsMuted": false,
+      "RepeatMode": "RepeatNone",
+      "PlaybackOrder": "Default"
+    },
+    "AdditionalUsers": [],
+    "Capabilities": {
+      "PlayableMediaTypes": [],
+      "SupportedCommands": [],
+      "SupportsMediaControl": false,
+      "SupportsPersistentIdentifier": true
+    },
+    "RemoteEndPoint": "172.26.0.2",
+    "PlayableMediaTypes": [],
+    "Id": "954ea4c0a761b6b1fc35f770aeb32ac2",
+    "UserId": "86dd2eefc2e944c5b58c72da09c48ebb",
+    "UserName": "antonis",
+    "Client": "Infuse-Direct",
+    "LastActivityDate": "2025-09-09T15:49:16.9859806Z",
+    "LastPlaybackCheckIn": "0001-01-01T00:00:00.0000000Z",
+    "DeviceName": "Mac",
+    "DeviceId": "D43FE36D-ACCB-5AC2-AE4B-C41D008AE6BD",
+    "ApplicationVersion": "8.2.2",
+    "IsActive": true,
+    "SupportsMediaControl": false,
+    "SupportsRemoteControl": false,
+    "NowPlayingQueue": [],
+    "NowPlayingQueueFullItems": [],
+    "HasCustomDeviceName": false,
+    "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4",
+    "SupportedCommands": []
+  },
+  "AccessToken": "5eb0470bf9d240b29d5c039552ba2e0e",
+  "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4"
+}
+===
+
+GET /UserViews?user_id=86dd2eefc2e944c5b58c72da09c48ebb&include_external_content=false HTTP/1.1
+Host: jellyfin.keremidis.eu
+X-Emby-Authorization: MediaBrowser Version="8.2.2", DeviceId="D43FE36D-ACCB-5AC2-AE4B-C41D008AE6BD", Device="Mac", Token="5eb0470bf9d240b29d5c039552ba2e0e", Client="Infuse-Direct"
+Accept: application/json
+User-Agent: Infuse-Direct/8.2.2
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+{
+  "Items": [
+    {
+      "Name": "Movies",
+      "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4",
+      "Id": "f137a2dd21bbc1b99aa5c0f6bf02a805",
+      "Etag": "e7e53dcc32c3801115d0407cd6416be1",
+      "DateCreated": "2022-11-08T17:50:20.8448693Z",
+      "CanDelete": false,
+      "CanDownload": false,
+      "SortName": "movies",
+      "ExternalUrls": [],
+      "Path": "/config/data/root/default/Movies",
+      "EnableMediaSourceDisplay": true,
+      "ChannelId": null,
+      "Taglines": [],
+      "Genres": [],
+      "PlayAccess": "Full",
+      "RemoteTrailers": [],
+      "ProviderIds": {},
+      "IsFolder": true,
+      "ParentId": "e9d5075a555c1cbc394eec4cef295274",
+      "Type": "CollectionFolder",
+      "People": [],
+      "Studios": [],
+      "GenreItems": [],
+      "LocalTrailerCount": 0,
+      "UserData": {
+        "PlaybackPositionTicks": 0,
+        "PlayCount": 0,
+        "IsFavorite": false,
+        "Played": false,
+        "Key": "f137a2dd-21bb-c1b9-9aa5-c0f6bf02a805",
+        "ItemId": "00000000000000000000000000000000"
+      },
+      "ChildCount": 1,
+      "SpecialFeatureCount": 0,
+      "DisplayPreferencesId": "f137a2dd21bbc1b99aa5c0f6bf02a805",
+      "Tags": [],
+      "PrimaryImageAspectRatio": 1.7777777777777777,
+      "CollectionType": "movies",
+      "ImageTags": {
+        "Primary": "4183b69eb08fcd80b087bdf0cdd36c7c"
+      },
+      "BackdropImageTags": [],
+      "ImageBlurHashes": {
+        "Primary": {
+          "4183b69eb08fcd80b087bdf0cdd36c7c": "WA8W]VkW0KRjWCofsoR*aes-R*ay00Rk?bxtj[WBRjWBt7t6kCWV"
+        }
+      },
+      "LocationType": "FileSystem",
+      "MediaType": "Unknown",
+      "LockedFields": [],
+      "LockData": false
+    },
+    {
+      "Name": "TV",
+      "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4",
+      "Id": "4514ec850e5ad0c47b58444e17b6346c",
+      "Etag": "ea7b09a236b06d54c6c3419d85a0ed17",
+      "DateCreated": "2022-11-08T17:50:58.5132478Z",
+      "CanDelete": false,
+      "CanDownload": false,
+      "SortName": "tv",
+      "ExternalUrls": [],
+      "Path": "/config/data/root/default/TV",
+      "EnableMediaSourceDisplay": true,
+      "ChannelId": null,
+      "Taglines": [],
+      "Genres": [],
+      "PlayAccess": "Full",
+      "RemoteTrailers": [],
+      "ProviderIds": {},
+      "IsFolder": true,
+      "ParentId": "e9d5075a555c1cbc394eec4cef295274",
+      "Type": "CollectionFolder",
+      "People": [],
+      "Studios": [],
+      "GenreItems": [],
+      "LocalTrailerCount": 0,
+      "UserData": {
+        "PlaybackPositionTicks": 0,
+        "PlayCount": 0,
+        "IsFavorite": false,
+        "Played": false,
+        "Key": "4514ec85-0e5a-d0c4-7b58-444e17b6346c",
+        "ItemId": "00000000000000000000000000000000"
+      },
+      "ChildCount": 4,
+      "SpecialFeatureCount": 0,
+      "DisplayPreferencesId": "4514ec850e5ad0c47b58444e17b6346c",
+      "Tags": [],
+      "PrimaryImageAspectRatio": 1.7777777777777777,
+      "CollectionType": "tvshows",
+      "ImageTags": {
+        "Primary": "79c5aac5299147d4aa888173e604f61c"
+      },
+      "BackdropImageTags": [],
+      "ImageBlurHashes": {
+        "Primary": {
+          "79c5aac5299147d4aa888173e604f61c": "WCB3jB-ox]t7-=oz_NIpo}WVt7ofENWB%1WCMxt6S$t7n$ogV@WX"
+        }
+      },
+      "LocationType": "FileSystem",
+      "MediaType": "Unknown",
+      "LockedFields": [],
+      "LockData": false
+    },
+    {
+      "Name": "Music",
+      "ServerId": "6d6faaf682e64130a41fb2ad2b41a3b4",
+      "Id": "7e64e319657a9516ec78490da03edccb",
+      "Etag": "489e51f5116a0f77af71f96f43eadf60",
+      "DateCreated": "2025-08-29T19:54:41.0257224Z",
+      "CanDelete": false,
+      "CanDownload": false,
+      "SortName": "music",
+      "ExternalUrls": [],
+      "Path": "/config/data/root/default/Music",
+      "EnableMediaSourceDisplay": true,
+      "ChannelId": null,
+      "Taglines": [],
+      "Genres": [],
+      "PlayAccess": "Full",
+      "RemoteTrailers": [],
+      "ProviderIds": {},
+      "IsFolder": true,
+      "ParentId": "e9d5075a555c1cbc394eec4cef295274",
+      "Type": "CollectionFolder",
+      "People": [],
+      "Studios": [],
+      "GenreItems": [],
+      "LocalTrailerCount": 0,
+      "UserData": {
+        "PlaybackPositionTicks": 0,
+        "PlayCount": 0,
+        "IsFavorite": false,
+        "Played": false,
+        "Key": "7e64e319-657a-9516-ec78-490da03edccb",
+        "ItemId": "00000000000000000000000000000000"
+      },
+      "ChildCount": 4,
+      "SpecialFeatureCount": 0,
+      "DisplayPreferencesId": "7e64e319657a9516ec78490da03edccb",
+      "Tags": [],
+      "PrimaryImageAspectRatio": 1.7777777777777777,
+      "CollectionType": "music",
+      "ImageTags": {
+        "Primary": "054f77ceb74e623f040a390c26448de3"
+      },
+      "BackdropImageTags": [],
+      "ImageBlurHashes": {
+        "Primary": {
+          "054f77ceb74e623f040a390c26448de3": "WB8;GR~pk9xu-:xaIpM{smxZxut7D$oL-;R+IVV@WAaxt7t7ofWB"
+        }
+      },
+      "LocationType": "FileSystem",
+      "MediaType": "Unknown",
+      "LockedFields": [],
+      "LockData": false
+    }
+  ],
+  "TotalRecordCount": 3,
+  "StartIndex": 0
+}
+===

@@ -1,25 +1,37 @@
 use actix_web::{web, HttpResponse, Responder};
+use crate::models::jellyfin;
 use crate::services::media_service::{MediaService};
-use crate::models::ertflix::{TVShow, Movie};
 
 pub async fn handle_get_tv_shows(media_service: web::Data<MediaService>) -> impl Responder {
     match media_service.get_tv_shows().await {
-        Ok(tv_shows) => HttpResponse::Ok().json(tv_shows),
+        Ok(ertflix_tv_shows) => HttpResponse::Ok().json(ertflix_tv_shows),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 
 pub async fn handle_get_movies(media_service: web::Data<MediaService>) -> impl Responder {
     match media_service.get_movies().await {
-        Ok(movies) => HttpResponse::Ok().json(movies),
+        Ok(ertflix_movies) => HttpResponse::Ok().json(ertflix_movies),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 
-pub async fn handle_get_collections(media_service: web::Data<MediaService>) -> impl Responder {
-    println!("Handling get collections request");
-    match media_service.get_collections().await {
-        Ok(collections) => HttpResponse::Ok().json(collections),
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserViewsQuery {
+    pub user_id: String,
+}
+
+pub async fn handle_get_collections(
+    media_service: web::Data<MediaService>,
+    query: web::Query<UserViewsQuery>,
+) -> impl Responder {
+    match media_service.get_collections(&query.user_id).await {
+        Ok(collections_vec) => HttpResponse::Ok().json(jellyfin::Collections::new(collections_vec)),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
+}
+
+pub async fn handle_get_system_info() -> impl Responder {
+    HttpResponse::Ok().json(jellyfin::SystemInfo::default())
 }
