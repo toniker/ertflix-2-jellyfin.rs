@@ -108,7 +108,7 @@ impl<DefaultErtflixClient: ErtflixClient> MediaService<DefaultErtflixClient> {
     /// # Arguments
     ///
     /// * `base_url` - ERTFLIX API base URL
-    pub async fn new(base_url: &str) -> Result<Self, Box<dyn std::error::Error>> {
+    pub async fn new(base_url: &str) -> Result<Self, Box<dyn error::Error>> {
         info!("Creating new MediaService with base URL: {}", base_url);
         debug!("Initializing ERTFLIX client");
 
@@ -121,7 +121,7 @@ impl<DefaultErtflixClient: ErtflixClient> MediaService<DefaultErtflixClient> {
     }
 
     /// Retrieves TV shows
-    pub async fn get_tv_shows(&self) -> Result<Vec<ertflix::TVShow>, Box<dyn std::error::Error>> {
+    pub async fn get_tv_shows(&self) -> Result<Vec<ertflix::TVShow>, Box<dyn error::Error>> {
         info!("Starting TV shows retrieval");
         trace!("Delegating to ERTFLIX client for TV shows");
 
@@ -141,7 +141,7 @@ impl<DefaultErtflixClient: ErtflixClient> MediaService<DefaultErtflixClient> {
     }
 
     /// Retrieves movies
-    pub async fn get_movies(&self) -> Result<Vec<ertflix::Movie>, Box<dyn std::error::Error>> {
+    pub async fn get_movies(&self) -> Result<Vec<ertflix::Movie>, Box<dyn error::Error>> {
         info!("Starting movies retrieval");
         trace!("Delegating to ERTFLIX client for movies");
 
@@ -162,7 +162,7 @@ impl<DefaultErtflixClient: ErtflixClient> MediaService<DefaultErtflixClient> {
     
     pub async fn get_collections(
         &self,
-    ) -> Result<Vec<jellyfin::Collection>, Box<dyn std::error::Error>> {
+    ) -> Result<Vec<jellyfin::Collection>, Box<dyn error::Error>> {
         info!("Starting collections retrieval and conversion");
         trace!("Delegating to ERTFLIX client for collections");
 
