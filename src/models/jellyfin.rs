@@ -1,8 +1,8 @@
-use serde::Deserialize;
-use serde::Serialize;
+use crate::{config, models::ertflix};
+use chrono::offset::Local;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use uuid::Uuid;
-use crate::config;
-use crate::models::ertflix;
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct Movie {
@@ -41,7 +41,7 @@ pub struct Episode {
     pub duration: i32,
 }
 
-#[derive(serde::Serialize)]
+#[derive(Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Collection {
     pub name: String,
@@ -60,7 +60,7 @@ pub struct Collection {
     pub genres: Vec<String>,
     pub play_access: String,
     pub remote_trailers: Vec<String>,
-    pub provider_ids: std::collections::HashMap<String, String>,
+    pub provider_ids: HashMap<String, String>,
     pub is_folder: bool,
     pub parent_id: String,
     #[serde(rename = "Type")]
@@ -85,7 +85,7 @@ pub struct Collection {
     pub lock_data: bool,
 }
 
-#[derive(serde::Serialize)]
+#[derive(Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Collections {
     items: Vec<Collection>,
@@ -95,10 +95,9 @@ pub struct Collections {
 
 impl Collections {
     pub fn new(items: Vec<Collection>) -> Self {
-        let record_count = items.len();
-        Collections {
+        Self {
+            total_record_count: items.len(),
             items,
-            total_record_count: record_count,
             start_index: 0,
         }
     }
@@ -117,13 +116,13 @@ pub struct UserData {
 
 impl Default for UserData {
     fn default() -> Self {
-        UserData {
+        Self {
             playback_position_ticks: 0,
             play_count: 0,
             is_favorite: false,
             played: false,
             key: Uuid::new_v4().to_string(),
-            item_id: String::from("00000000000000000000000000000000"),
+            item_id: "00000000000000000000000000000000".into(),
         }
     }
 }
@@ -136,8 +135,8 @@ pub struct ImageTags {
 
 impl Default for ImageTags {
     fn default() -> Self {
-        ImageTags {
-            primary: String::from("00000000000000000000000000000000"),
+        Self {
+            primary: "00000000000000000000000000000000".into(),
         }
     }
 }
@@ -145,47 +144,49 @@ impl Default for ImageTags {
 #[derive(Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct ImageBlurHashes {
-    primary: std::collections::HashMap<String, String>,
+    primary: HashMap<String, String>,
 }
 
 impl Default for ImageBlurHashes {
     fn default() -> Self {
-        let mut map = std::collections::HashMap::new();
-        map.insert(
-            String::from("4183b69eb08fcd80b087bdf0cdd36c7c"),
-            String::from("000"),
-        );
-        Self {
-            primary: map
-        }
+        let mut map = HashMap::new();
+        map.insert("4183b69eb08fcd80b087bdf0cdd36c7c".into(), "000".into());
+        Self { primary: map }
     }
 }
 
 impl Collection {
     pub fn from(ertflix_collection: ertflix::Collection) -> Self {
-        let bytes = &[ertflix_collection.id.as_bytes(), ertflix_collection.name.as_bytes()].concat();
-        let etag = Uuid::new_v5(&Uuid::NAMESPACE_URL, bytes).to_string();
+        let etag = Uuid::new_v5(
+            &Uuid::NAMESPACE_URL,
+            &[
+                ertflix_collection.id.as_bytes(),
+                ertflix_collection.name.as_bytes(),
+            ]
+            .concat(),
+        )
+        .to_string();
         Self {
             name: ertflix_collection.name,
-            server_id: String::from(config::SERVER_ID),
+            server_id: config::SERVER_ID.into(),
             id: ertflix_collection.id,
             etag,
-            date_created: chrono::offset::Local::now().to_string(),
+            date_created: Local::now().to_string(),
             can_delete: true,
             can_download: true,
-            sort_name: "movies".to_string(),
+            sort_name: "movies".into(),
             external_urls: vec![],
-            path: "".to_string(),
+            path: "".into(),
             enable_media_source_display: false,
             channel_id: None,
             taglines: vec![],
             genres: vec![],
-            play_access: "Full".to_string(),
+            play_access: "Full".into(),
             remote_trailers: vec![],
             provider_ids: Default::default(),
             is_folder: true,
-            parent_id: "".to_string(),
-            item_type: "CollectionFolder".to_string(),
+            parent_id: "".into(),
+            item_type: "CollectionFolder".into(),
             people: vec![],
             studios: vec![],
             genre_items: vec![],
@@ -193,43 +194,17 @@ impl Collection {
             user_data: UserData::default(),
             child_count: 0,
             special_feature_count: 0,
-            display_preferences_id: "".to_string(),
+            display_preferences_id: "".into(),
             tags: vec![],
             primary_image_aspect_ratio: 0.0,
-            collection_type: "".to_string(),
+            collection_type: "".into(),
             image_tags: ImageTags::default(),
             backdrop_image_tags: vec![],
             image_blur_hashes: ImageBlurHashes::default(),
-            location_type: "FileSystem".to_string(),
-            media_type: "Unknown".to_string(),
+            location_type: "FileSystem".into(),
+            media_type: "Unknown".into(),
             locked_fields: vec![],
             lock_data: false,
-        }
-    }
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct SystemInfo {
-    local_address: String,
-    server_name: String,
-    version: String,
-    product_name: String,
-    operating_system: String,
-    id: String,
-    startup_wizard_completed: bool,
-}
-
-impl Default for SystemInfo {
-    fn default() -> Self {
-        SystemInfo {
-            local_address: "http://localhost:25860".to_string(),
-            server_name: "Ertflix Adapter".to_string(),
-            version: "10.8.0".to_string(),
-            product_name: "Jellyfin Server".to_string(),
-            operating_system: "Linux".to_string(),
-            id: String::from(config::SERVER_ID),
-            startup_wizard_completed: true,
         }
     }
 }
