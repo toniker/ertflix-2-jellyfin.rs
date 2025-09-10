@@ -1,3 +1,4 @@
+use std::error;
 use crate::models::ertflix;
 use crate::models::jellyfin;
 use crate::api::ertflix_client::ErtflixClient;

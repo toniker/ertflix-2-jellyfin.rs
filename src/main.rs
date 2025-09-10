@@ -32,7 +32,7 @@ async fn main() -> std::io::Result<()> {
     info!("Media service initialized with Ertflix API URL: {}", config::ERTFLIX_API_URL);
 
     let server_result = HttpServer::new(move || {
-        info!("Configuring new app instance");
+        info!("Configuring new app worker");
         App::new()
             .app_data(media_service.clone())
             .wrap(Logger::default()) // Add request logging middleware
